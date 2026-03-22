@@ -22,10 +22,9 @@ public class PostService {
         return postRepo.findAll();
     }
     public BlogPost getPostById(Long id){
-         Optional<BlogPost>post=postRepo.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Post With id "+id+"Not found");
-                return post.get();
-
+        BlogPost post = postRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post With id " + id + " Not found"));
+        return post;
     }
 
     public void updatePost(Long id, BlogPost updatedPost) {
