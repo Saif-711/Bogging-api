@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: blogging-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: blogging
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  system-app:
+    build: .
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blogging
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8888
+    ports:
+      - "8888:8888"
+    networks:
+      - app-network
+
+networks:
+  app-network:
